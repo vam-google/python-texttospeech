@@ -26,8 +26,9 @@ import nox
 BLACK_VERSION = "black==19.3b0"
 BLACK_PATHS = ["docs", "google", "tests", "noxfile.py", "setup.py"]
 
-if os.path.exists("samples"):
-    BLACK_PATHS.append("samples")
+# Temporarily commented out as samples have different flake rules
+# if os.path.exists("samples"):
+#     BLACK_PATHS.append("samples")
 
 
 @nox.session(python="3.7")
@@ -139,7 +140,7 @@ def docs(session):
     """Build the docs for this library."""
 
     session.install("-e", ".")
-    session.install("sphinx", "alabaster", "recommonmark")
+    session.install("sphinx<3.0", "alabaster", "recommonmark")
 
     shutil.rmtree(os.path.join("docs", "_build"), ignore_errors=True)
     session.run(
